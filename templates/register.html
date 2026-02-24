@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; padding: 0 16px; }
+      form { display: grid; gap: 10px; margin-bottom: 16px; }
+      input, button { padding: 10px; }
+      pre { white-space: pre-wrap; background: #f4f4f4; padding: 12px; }
+    </style>
+  </head>
+  <body>
+    <h1>Register user</h1>
+    <form id="register-form">
+      <input id="username" type="text" placeholder="Username" required />
+      <input id="password" type="password" placeholder="Password" required />
+      <button type="submit">Register</button>
+    </form>
+    <pre id="result"></pre>
+    <h2>Activate account</h2>
+    <form id="activate-form">
+      <input id="activation-token" type="text" placeholder="Activation token" required />
+      <button type="submit">Activate</button>
+    </form>
+    <pre id="activation-result"></pre>
+    <p><a href="/login-page">Go to login</a></p>
+    <script>
+      const form = document.getElementById('register-form');
+      const result = document.getElementById('result');
+      const activateForm = document.getElementById('activate-form');
+      const activationResult = document.getElementById('activation-result');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await response.json();
+        result.textContent = JSON.stringify(data, null, 2);
+        if (data.activation_token) {
+          document.getElementById('activation-token').value = data.activation_token;
+        }
+      });
+      activateForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const token = document.getElementById('activation-token').value;
+        const response = await fetch('/api/auth/activate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token })
+        });
+        const data = await response.json();
+        activationResult.textContent = JSON.stringify(data, null, 2);
+      });
+    </script>
+  </body>
+</html>

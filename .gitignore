@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Test and coverage artifacts
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Editor / OS
+.DS_Store
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Agent operational memory / local notes
+.claude/
+.claude/napkin.md
+**/napkin.md
+
+AGENTS.md

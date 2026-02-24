@@ -1,0 +1,24 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/api/deps.py" = ["B008"]
+"app/api/routes/auth.py" = ["B008"]
+"app/api/routes/pages.py" = ["B008"]
+"app/api/routes/users.py" = ["B008"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_unused_configs = true
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+show_error_codes = true
+exclude = ["^tests/"]
+ignore_missing_imports = true

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      body { font-family: Arial, sans-serif; max-width: 920px; margin: 40px auto; padding: 0 16px; }
+      table { border-collapse: collapse; width: 100%; margin-top: 16px; }
+      th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+      th { background: #f4f4f4; }
+      .top { display: flex; justify-content: space-between; align-items: center; }
+      a { text-decoration: none; }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Signed in as <strong>{{ current_user.username }}</strong> ({{ current_user.role }})</p>
+      </div>
+      <a href="/api/auth/web-logout">Logout</a>
+    </div>
+
+    <h2>Registered users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Role</th>
+          <th>Active</th>
+          <th>Created at</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+        <tr>
+          <td>{{ user.id }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.is_active }}</td>
+          <td>{{ user.created_at }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>
