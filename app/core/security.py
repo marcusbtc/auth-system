@@ -2,7 +2,8 @@ import secrets
 from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
-from jose import JWTError, jwt
+import jwt
+from jwt.exceptions import InvalidTokenError
 from passlib.context import CryptContext
 
 from app.core.config import settings
@@ -76,7 +77,7 @@ def create_one_time_token(ttl_minutes: int, subject: str, purpose: str) -> tuple
 def decode_token(token: str) -> dict:
     try:
         return jwt.decode(token, settings.jwt_secret, algorithms=[settings.jwt_algorithm])
-    except JWTError as exc:
+    except InvalidTokenError as exc:
         raise AppError('Invalid or expired token', status_code=401, code='INVALID_TOKEN') from exc
 
 

@@ -10,25 +10,26 @@ router = APIRouter(tags=['pages'])
 
 @router.get('/', response_class=HTMLResponse)
 def home(request: Request):
-    return templates.TemplateResponse('index.html', {'request': request})
+    return templates.TemplateResponse(request=request, name='index.html')
 
 
 @router.get('/login-page', response_class=HTMLResponse)
 def login_page(request: Request):
-    return templates.TemplateResponse('login.html', {'request': request})
+    return templates.TemplateResponse(request=request, name='login.html')
 
 
 @router.get('/register-page', response_class=HTMLResponse)
 def register_page(request: Request):
-    return templates.TemplateResponse('register.html', {'request': request})
+    return templates.TemplateResponse(request=request, name='register.html')
 
 
 @router.get('/dashboard', response_class=HTMLResponse)
 def dashboard(request: Request, current_user: dict = Depends(get_current_user)):
     users_payload = user_service.list_users(page=1, page_size=100, query=None, role=None, active=None)
     return templates.TemplateResponse(
-        'dashboard.html',
-        {'request': request, 'current_user': user_service.users.to_public(current_user), 'users': users_payload['items']},
+        request=request,
+        name='dashboard.html',
+        context={'current_user': user_service.users.to_public(current_user), 'users': users_payload['items']},
     )
 
 
