@@ -154,7 +154,13 @@ CI pipeline: `.github/workflows/ci.yml`.
 ## Docker
 
 ```bash
-docker compose up --build
+JWT_SECRET='<32+ character secret>' docker compose up --build --wait
 ```
 
 API runs at `http://localhost:8000`.
+
+MongoDB and Redis are private to the Compose network and persist in named
+volumes. Before production deployment, set the domain-specific
+`CORS_ALLOW_ORIGINS` and `TRUSTED_HOSTS` values, verify a Mongo backup, and
+record the immutable application image tag used for rollback. See
+[`docs/operations.md`](docs/operations.md).
